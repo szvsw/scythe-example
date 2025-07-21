@@ -1,0 +1,12 @@
+services:
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+      args:
+        - PYTHON_VERSION=${PYTHON_VERSION:-3.12}
+    env_file:
+      - .env
+    deploy:
+      mode: replicated
+      replicas: 1

@@ -12,7 +12,7 @@ class OrbitalDynamicsInputs(ExperimentInputSpec):
     inclination: float  # in degrees
 
 
-@ExperimentRegistry.Register
+@ExperimentRegistry.Register()
 def simulate_orbital_dynamics(
     input_spec: OrbitalDynamicsInputs,
 ) -> ExperimentOutputSpec:

@@ -11,7 +11,7 @@ class LifespanExperimentInputs(ExperimentInputSpec):
     weight: float
 
 
-@ExperimentRegistry.Register
+@ExperimentRegistry.Register()
 def simulate_lifespan(input_spec: LifespanExperimentInputs) -> ExperimentOutputSpec:
     simulated_lifespan = np.random.normal(input_spec.age + 100, 10) - input_spec.weight
     simulated_height = np.random.normal(170, 10)

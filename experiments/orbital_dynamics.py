@@ -3,7 +3,6 @@ import pandas as pd
 
 from scythe.base import ExperimentInputSpec, ExperimentOutputSpec
 from scythe.registry import ExperimentRegistry
-from scythe.utils.results import make_onerow_multiindex_from_dict
 
 
 class OrbitalDynamicsInputs(ExperimentInputSpec):
@@ -12,10 +11,17 @@ class OrbitalDynamicsInputs(ExperimentInputSpec):
     inclination: float  # in degrees
 
 
+class OrbitalDynamicsOutputs(ExperimentOutputSpec):
+    orbital_period_hours: float
+    orbital_velocity_km_s: float
+    apogee_distance_km: float
+    perigee_distance_km: float
+
+
 @ExperimentRegistry.Register()
 def simulate_orbital_dynamics(
     input_spec: OrbitalDynamicsInputs,
-) -> ExperimentOutputSpec:
+) -> OrbitalDynamicsOutputs:
     # Gravitational constant for Earth (km³/s²)
     mu_earth = 398600.4418
 
@@ -37,18 +43,6 @@ def simulate_orbital_dynamics(
     orbital_period += np.random.normal(0, 0.1)
     orbital_velocity += np.random.normal(0, 0.01)
 
-    index_data = input_spec.model_dump(mode="json")
-    multi_index = make_onerow_multiindex_from_dict(index_data)
-    results_df = pd.DataFrame(
-        data={
-            "orbital_period_hours": [orbital_period],
-            "orbital_velocity_km_s": [orbital_velocity],
-            "apogee_distance_km": [apogee_distance],
-            "perigee_distance_km": [perigee_distance],
-        },
-        index=multi_index,
-    )
-
     experiment_metrics = pd.DataFrame(
         data={
             "simulation_runtime_ms": [np.random.normal(50, 5)],
@@ -56,12 +50,16 @@ def simulate_orbital_dynamics(
             "memory_used_mb": [np.random.normal(15, 2)],
             "cpu_time_ms": [np.random.normal(30, 3)],
         },
-        index=multi_index,
+    )
+    experiment_metrics.index = input_spec.make_multiindex(
+        n_rows=len(experiment_metrics)
     )
 
-    return ExperimentOutputSpec(
-        dataframes={
-            "orbital_parameters": results_df,
-            "metrics": experiment_metrics,
-        },
+    results = OrbitalDynamicsOutputs(
+        dataframes={"metrics": experiment_metrics},
+        orbital_period_hours=orbital_period,
+        orbital_velocity_km_s=orbital_velocity,
+        apogee_distance_km=apogee_distance,
+        perigee_distance_km=perigee_distance,
     )
+    return results

@@ -1,4 +1,7 @@
 from datetime import datetime
+from pathlib import Path
+
+import boto3
 import dotenv
 import numpy as np
 import pandas as pd
@@ -15,6 +18,12 @@ def sample(n: int = 10) -> pd.DataFrame:
         {
             "age": age,
             "weight": weight,
+            "coeffs": [
+                Path("artifacts/even.json")
+                if i % 2 == 0
+                else Path("artifacts/odd.json")
+                for i in range(len(age))
+            ],
         }
     )
     return df
@@ -29,6 +38,7 @@ def allocate(df: pd.DataFrame):
         LifespanExperimentInputs.model_validate(row.to_dict())
         for _, row in df.iterrows()
     ]
+    s3_client = boto3.client("s3")
     return allocate_experiment(
         experiment_id=experiment_id,
         experiment=simulate_lifespan,
@@ -37,6 +47,7 @@ def allocate(df: pd.DataFrame):
             factor=2,
             max_depth=2,
         ),
+        s3_client=s3_client,
     )
 
 

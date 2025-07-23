@@ -1,12 +1,13 @@
 import numpy as np
 
-from scythe.base import ExperimentInputSpec, ExperimentOutputSpec
+from scythe.base import ExperimentInputSpec, ExperimentOutputSpec, FileReference
 from scythe.registry import ExperimentRegistry
 
 
 class LifespanExperimentInputs(ExperimentInputSpec):
     age: int
     weight: float
+    coeffs: FileReference
 
 
 class LifespanExperimentOutputs(ExperimentOutputSpec):

@@ -9,3 +9,7 @@ dependencies = [
     "pandas>=2.2.3",
     "scythe-engine>=0.0.1",
 ]
+
+# [tool.uv.sources]
+# scythe-engine = { path = "../scythe", editable = true }
+

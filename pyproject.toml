@@ -7,7 +7,7 @@ requires-python = ">=3.10"
 dependencies = [
     "numpy>=2.2.6",
     "pandas>=2.2.3",
-    "scythe-engine>=0.0.22",
+    "scythe-engine>=0.0.24",
 ]
 
 # [tool.uv.sources]

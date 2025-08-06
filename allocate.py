@@ -2,7 +2,6 @@ from datetime import datetime
 from pathlib import Path
 
 import boto3
-import dotenv
 import numpy as np
 import pandas as pd
 from scythe.allocate import allocate_experiment
@@ -61,8 +60,7 @@ def allocate(df: pd.DataFrame):
 
 
 def main():
-    dotenv.load_dotenv()
-    specs = sample()
+    specs = sample(10)
     ref = allocate(specs)
     print(ref.workflow_run_id)
     result = ref.result()

@@ -38,9 +38,8 @@ def sample(n: int = 10) -> pd.DataFrame:
 
 
 def allocate(df: pd.DataFrame):
-    datetimestr = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    experiment_id = f"building_energy/v1/{datetimestr}"
-    df["experiment_id"] = experiment_id
+
+    df["experiment_id"] = "placeholder"
     df["sort_index"] = pd.RangeIndex(len(df))
     specs = [
         BuildingSimulationInput.model_validate(row.to_dict())
@@ -48,7 +47,7 @@ def allocate(df: pd.DataFrame):
     ]
     s3_client = boto3.client("s3")
     return allocate_experiment(
-        experiment_id=experiment_id,
+        experiment_id=None,
         experiment=simulate_energy,
         specs=specs,
         recursion_map=RecursionMap(
@@ -56,6 +55,7 @@ def allocate(df: pd.DataFrame):
             max_depth=2,
         ),
         s3_client=s3_client,
+        version="bumpmajor",
     )
 
 

@@ -1,8 +1,9 @@
 from typing import Literal
+
 from pydantic import Field
 from scythe.base import ExperimentInputSpec, ExperimentOutputSpec
 from scythe.registry import ExperimentRegistry
-from scythe.types import FileReference
+from scythe.type_helpers import FileReference
 
 
 class BuildingSimulationInput(ExperimentInputSpec):

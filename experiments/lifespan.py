@@ -1,7 +1,8 @@
 import numpy as np
 
 from pydantic import Field
-from scythe.base import ExperimentInputSpec, ExperimentOutputSpec, FileReference
+from scythe.type_helpers import FileReference
+from scythe.base import ExperimentInputSpec, ExperimentOutputSpec
 from scythe.registry import ExperimentRegistry
 
 

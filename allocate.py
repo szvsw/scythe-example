@@ -1,10 +1,10 @@
-from datetime import datetime
+import json
 from pathlib import Path
 
 import boto3
 import numpy as np
 import pandas as pd
-from scythe.allocate import allocate_experiment
+from scythe.allocate import BaseExperiment
 from scythe.scatter_gather import RecursionMap
 
 from experiments.building_energy import BuildingSimulationInput, simulate_energy
@@ -46,26 +46,33 @@ def allocate(df: pd.DataFrame):
         for _, row in df.iterrows()
     ]
     s3_client = boto3.client("s3")
-    return allocate_experiment(
-        experiment_id=None,
+
+    experiment = BaseExperiment(
         experiment=simulate_energy,
-        specs=specs,
-        recursion_map=RecursionMap(
-            factor=2,
-            max_depth=2,
-        ),
-        s3_client=s3_client,
+    )
+
+    return experiment.allocate(
+        specs,
         version="bumpmajor",
+        s3_client=s3_client,
+        recursion_map=RecursionMap(factor=2, max_depth=2),
     )
 
 
 def main():
     specs = sample(10)
-    ref = allocate(specs)
+    run, ref = allocate(specs)
+    print(json.dumps(run.model_dump(mode="json"), indent=2))
     print(ref.workflow_run_id)
     result = ref.result()
     print(result)
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    exp = BaseExperiment.model_validate(
+        BaseExperiment(
+            experiment=simulate_energy,
+        ).model_dump(mode="json")
+    )
+    print(exp)

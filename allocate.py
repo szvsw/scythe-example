@@ -69,10 +69,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # main()
-    exp = BaseExperiment.model_validate(
-        BaseExperiment(
-            experiment=simulate_energy,
-        ).model_dump(mode="json")
-    )
-    print(exp)
+    main()

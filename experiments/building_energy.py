@@ -1,5 +1,5 @@
 from typing import Literal
-
+from pathlib import Path
 from pydantic import Field
 from scythe.base import ExperimentInputSpec, ExperimentOutputSpec
 from scythe.registry import ExperimentRegistry
@@ -51,13 +51,25 @@ class BuildingSimulationOutput(ExperimentOutputSpec):
     pumps: float = Field(
         default=..., description="Annual pumps energy usage, kWh/m2", ge=0
     )
+    timeseries: FileReference = Field(
+        default=..., description="Timeseries of the building energy usage"
+    )
 
 
 @ExperimentRegistry.Register()
-def simulate_energy(input_spec: BuildingSimulationInput) -> BuildingSimulationOutput:
+def simulate_energy(
+    input_spec: BuildingSimulationInput, tempdir: Path
+) -> BuildingSimulationOutput:
     """Initialize and execute an energy model of a building."""
 
+    if input_spec.sort_index % 3 == 0:
+        raise Exception("This is a test error")
     # do some work!
+    pth = tempdir / "timeseries.csv"
+    with open(pth, "w") as f:
+        f.write("time,energy\n")
+        f.write("0,100\n")
+        f.write("1,200\n")
 
     return BuildingSimulationOutput(
         heating=0,
@@ -66,5 +78,6 @@ def simulate_energy(input_spec: BuildingSimulationInput) -> BuildingSimulationOu
         equipment=0,
         fans=0,
         pumps=0,
+        timeseries=pth,
         dataframes={},
     )

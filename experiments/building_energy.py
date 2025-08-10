@@ -62,8 +62,6 @@ def simulate_energy(
 ) -> BuildingSimulationOutput:
     """Initialize and execute an energy model of a building."""
 
-    if input_spec.sort_index % 3 == 0:
-        raise Exception("This is a test error")
     # do some work!
     pth = tempdir / "timeseries.csv"
     with open(pth, "w") as f:

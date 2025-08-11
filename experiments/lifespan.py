@@ -1,9 +1,9 @@
 import numpy as np
 
 from pydantic import Field
-from scythe.type_helpers import FileReference
 from scythe.base import ExperimentInputSpec, ExperimentOutputSpec
 from scythe.registry import ExperimentRegistry
+from scythe.utils.filesys import FileReference
 
 
 class LifespanExperimentInputs(ExperimentInputSpec):

@@ -4,7 +4,7 @@ from pathlib import Path
 import boto3
 import numpy as np
 import pandas as pd
-from scythe.allocate import BaseExperiment
+from scythe.experiments import BaseExperiment
 from scythe.scatter_gather import RecursionMap
 
 from experiments.building_energy import BuildingSimulationInput, simulate_energy

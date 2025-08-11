@@ -1467,7 +1467,7 @@ wheels = [
 
 [[package]]
 name = "scythe-engine"
-version = "0.0.37"
+version = "0.0.38"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "boto3" },
@@ -1481,9 +1481,9 @@ dependencies = [
     { name = "tables", version = "3.10.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b1/0a/ec4e1247eb5e75b9c3de54fc2a3d3064e8f5e10bf4b3887b253667022cc2/scythe_engine-0.0.37.tar.gz", hash = "sha256:9d0da159ff365c4d749e01c51694ae5c8b170876118f91da3c92e53e0dcda06d", size = 222577, upload_time = "2025-08-11T12:02:21.442Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/44/1b/325670d4964260398307698e2306ea3dcdc2ddbbe4410be53c6d847eb4e0/scythe_engine-0.0.38.tar.gz", hash = "sha256:cf090408772b0f7e1e1d4d353df3df36c28da18263dccda6569c149f3c33f2ee", size = 222659, upload_time = "2025-08-11T12:34:46.75Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5c/49/5d0ea17cf58b805b7fdd090c3a76a69ed0cb535a194a89ec276107f884b2/scythe_engine-0.0.37-py3-none-any.whl", hash = "sha256:1d5e03cd8661366967949dd7a7a24c9a10e32769d0dabacaf229bd2ae423d607", size = 31403, upload_time = "2025-08-11T12:02:20.479Z" },
+    { url = "https://files.pythonhosted.org/packages/58/85/22dc2576e0b69a367fbd95e0638781752bfbc231454bc05b2ca14bacb3d8/scythe_engine-0.0.38-py3-none-any.whl", hash = "sha256:56f5cfe19c54eba4bc5851d32ece7e23b43174d45b4499a4870d651d684e2177", size = 31475, upload_time = "2025-08-11T12:34:45.514Z" },
 ]
 
 [[package]]
@@ -1500,7 +1500,7 @@ dependencies = [
 requires-dist = [
     { name = "numpy", specifier = ">=2.2.6" },
     { name = "pandas", specifier = ">=2.2.3" },
-    { name = "scythe-engine", specifier = "==0.0.37" },
+    { name = "scythe-engine", specifier = "==0.0.38" },
 ]
 
 [[package]]
